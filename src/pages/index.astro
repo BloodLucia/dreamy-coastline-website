@@ -38,9 +38,9 @@ const allDiscography = (await Astro.glob('./discographies/*.md'))
         {
           allPosts.map(post => {
             return (
-              <li class="flex gap-4 text-lg">
-                <span class="text-[#1a202c]">{post.frontmatter.createdAt}</span>
-                <span class="text-[#1a202c] w-full overflow-hidden text-nowrap text-ellipsis">{post.frontmatter.title}</span>
+              <li class="flex gap-4 text-base text-[#1a202c]">
+                <span>{post.frontmatter.createdAt}</span>
+                <span>{post.frontmatter.title}</span>
               </li>
             )
           })
