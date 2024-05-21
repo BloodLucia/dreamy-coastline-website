@@ -1,13 +1,12 @@
 ---
 interface Props {
   title: string;
-  hasMore?: boolean;
 }
 
-const { title, hasMore = false } = Astro.props
+const { title } = Astro.props
 ---
 
-<section class="border-b pb-8">
+<section>
   <h2 class="mb-4 text-3xl">{title}</h2>
   <slot />
 </section>

@@ -6,12 +6,11 @@ import MustHead from "../components/MustHead.astro";
 import { SITE_DESC, SITE_TITLE } from "../config";
 
 interface Props {
-  showHeader?: boolean;
   mustHeader?: boolean;
   title?: string;
 }
 
-const { mustHeader = false, showHeader = false, title = "" } = Astro.props;
+const { mustHeader = false, title = "" } = Astro.props;
 const pageTitle = title !== "" ? `${title} | ${SITE_TITLE}` : SITE_TITLE
 ---
 
