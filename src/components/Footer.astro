@@ -1,15 +1,9 @@
 ---
-import MediaIcon from "./MediaIcon.astro";
 import { SITE_TITLE } from "../config";
 ---
 
 <footer class="py-5 border-t flex flex-col gap-4 justify-center items-center bg-white">
-  <h2 class="text-base hover:underline cursor-pointer">&copy; {SITE_TITLE}</h2>
-  <ol class="flex gap-6">
-    <MediaIcon icon="wyy" link="" />
-    <MediaIcon icon="qqyy" link="" />
-    <MediaIcon icon="spotify" link="" />
-    <MediaIcon icon="twitter" link="" />
-    <MediaIcon icon="instagram" link="" />
-  </ol>
+  <h2 class="text-base hover:underline cursor-pointer flex gap-1 items-center">
+    &copy; {SITE_TITLE}
+  </h2>
 </footer>
