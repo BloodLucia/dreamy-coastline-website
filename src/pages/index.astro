@@ -1,12 +1,12 @@
 ---
+import { getCollection } from 'astro:content';
 import Layout from "../layouts/Layout.astro";
 import Content from "../components/Content.astro";
 import Section from "../components/Section.astro";
+import { Debug } from "astro:components";
 
-const images = import.meta.glob<{ default: ImageMetadata }>('/src/assets/images/*.{jpeg,jpg,png,gif}');
-
-const allPosts = (await Astro.glob('./posts/*.md'))
-const allDiscography = (await Astro.glob('./discographies/*.md'))
+// const images = import.meta.glob<{ default: ImageMetadata }>('/src/assets/images/*.{jpeg,jpg,png,gif}');
+const releases = (await getCollection("releases"))
 ---
 
 <Layout mustHeader>
@@ -14,18 +14,22 @@ const allDiscography = (await Astro.glob('./discographies/*.md'))
     <Section title="音乐">
       <ol class="grid gap-4 grid-cols-3 max-md:grid-cols-2">
         {
-          allDiscography.map(item => {
-            const heroImage = images[item.frontmatter.heroImage]
-            const heroImageSrc =  heroImage ? heroImage() : item.frontmatter.heroImage
+          releases.map(({data}) => {
             return (
               <li class="flex flex-col gap-3">
-                <a href={item.frontmatter.link} title={item.frontmatter.title} class="text-nowrap text-ellipsis inline-flex overflow-hidden">
-                  <img src={heroImageSrc} class="w-full h-auto" alt={item.frontmatter.desc} loading="lazy" />
+                {/* <Debug answer={images} /> */}
+                <a href={data.link} title={data.title} class="text-nowrap text-ellipsis inline-flex overflow-hidden">
+                  <img src={data.heroImage} class="w-full h-auto" decoding="async" loading="lazy" />
+                  {/* <Image src={heroImageSrc} alt="" loading="lazy" decoding="async" /> */}
                 </a>
                 <div class="flex flex-col gap-1 items-start">
-                  <a href="javascript" class= "inline-flex justify-center items-center py-1 px-1.5 min-w-10 bg-[#e2e8f0] text-sm leading-[1] rounded-[4px] cursor-pointer">{item.frontmatter.type}</a>
-                  <a href={item.frontmatter.link} title={item.frontmatter.title} class="w-full leading-[1.4] text-base text-nowrap text-ellipsis overflow-hidden hover:underline text-[#1a202c]">{item.frontmatter.title}</a>
-                  <span class="text-sm text-[#718096] leading-[1.4]">{item.frontmatter.date}</span>
+                  <a href="javascript" class= "inline-flex justify-center items-center py-1 px-1.5 min-w-10 bg-[#e2e8f0] text-sm leading-[1] rounded-[4px] cursor-pointer">
+                    {data.type}
+                  </a>
+                  <a href={data.link} title={data.title} class="w-full leading-[1.4] text-base text-nowrap text-ellipsis overflow-hidden hover:underline text-[#1a202c]">
+                    {data.title}
+                  </a>
+                  <span class="text-sm text-[#718096] leading-[1.4]">{data.date}</span>
                 </div>
               </li>
             )
@@ -33,7 +37,7 @@ const allDiscography = (await Astro.glob('./discographies/*.md'))
         }
       </ol>
     </Section>
-    <Section title="动态">
+    <!-- <Section title="动态">
       <ol class="flex flex-col gap-4">
         {
           allPosts.map(post => {
@@ -46,6 +50,6 @@ const allDiscography = (await Astro.glob('./discographies/*.md'))
           })
         }
       </ol>
-    </Section>
+    </Section> -->
   </Content>
 </Layout>
