@@ -1,9 +1,8 @@
 ---
-export interface Props extends astroHTML.JSX.AnchorHTMLAttributes {}
+interface Props extends astroHTML.JSX.AnchorHTMLAttributes {}
 
 const { href, class: className, ...props } = Astro.props;
-const hrefDefined = href !== null && href !== undefined;
-const isActive = hrefDefined ? Astro.url.pathname === href : false;
+const isActive = href === Astro.url.pathname
 ---
 
 <a href={href} class:list={[className, { active: isActive } ]} {...props}>
@@ -12,20 +11,13 @@ const isActive = hrefDefined ? Astro.url.pathname === href : false;
 
 <style>
   a {
-    position: relative;
     text-align: center;
-    transition: 0.3s ease-in 0s;
-    color: #333333;
+    color: #1a202c;
     line-height: 40px;
     box-sizing: border-box;
-    /* font-weight: lighter; */
   }
   a.active {
     font-weight: bolder;
-    border-bottom: 2px solid #494e58;
-  }
-  a:hover {
-    /* background-color: #f7fafc; */
-    /* text-decoration: underline; */
+    border-bottom: 2px solid #1a202c;
   }
 </style>

@@ -10,9 +10,10 @@ export default defineConfig({
     icon({ iconDir: "src/assets/icons" })
   ],
   devToolbar: {
-    enabled: false
+    enabled: import.meta.env.DEV
   },
   prefetch: {
     prefetchAll: true
-  }
+  },
+  trailingSlash: 'never',
 });
