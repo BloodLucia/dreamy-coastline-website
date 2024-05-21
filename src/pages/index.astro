@@ -1,0 +1,51 @@
+---
+import Layout from "../layouts/Layout.astro";
+import Content from "../components/Content.astro";
+import Section from "../components/Section.astro";
+
+const images = import.meta.glob<{ default: ImageMetadata }>('/src/assets/images/*.{jpeg,jpg,png,gif}');
+
+const allPosts = (await Astro.glob('./posts/*.md'))
+const allDiscography = (await Astro.glob('./discographies/*.md'))
+---
+
+<Layout mustHeader>
+  <Content>
+    <Section title="音乐">
+      <ol class="grid gap-4 grid-cols-3 max-md:grid-cols-2">
+        {
+          allDiscography.map(item => {
+            const heroImage = images[item.frontmatter.heroImage]
+            const heroImageSrc =  heroImage ? heroImage() : item.frontmatter.heroImage
+            return (
+              <li class="flex flex-col gap-3">
+                <a href={item.frontmatter.link} title={item.frontmatter.title} class="text-nowrap text-ellipsis inline-flex overflow-hidden">
+                  <img src={heroImageSrc} class="w-full h-auto" alt={item.frontmatter.desc} loading="lazy" />
+                </a>
+                <div class="flex flex-col gap-1 items-start">
+                  <a href="javascript" class= "inline-flex justify-center items-center py-1 px-1.5 min-w-10 bg-[#e2e8f0] text-sm leading-[1] rounded-[4px] cursor-pointer">{item.frontmatter.type}</a>
+                  <a href={item.frontmatter.link} title={item.frontmatter.title} class="w-full leading-[1.4] text-base text-nowrap text-ellipsis overflow-hidden hover:underline text-[#1a202c]">{item.frontmatter.title}</a>
+                  <span class="text-sm text-[#718096] leading-[1.4]">{item.frontmatter.date}</span>
+                </div>
+              </li>
+            )
+          })
+        }
+      </ol>
+    </Section>
+    <Section title="动态">
+      <ol class="flex flex-col gap-4">
+        {
+          allPosts.map(post => {
+            return (
+              <li class="flex gap-4 text-lg">
+                <span class="text-[#1a202c]">{post.frontmatter.createdAt}</span>
+                <span class="text-[#1a202c] w-full overflow-hidden text-nowrap text-ellipsis">{post.frontmatter.title}</span>
+              </li>
+            )
+          })
+        }
+      </ol>
+    </Section>
+  </Content>
+</Layout>
